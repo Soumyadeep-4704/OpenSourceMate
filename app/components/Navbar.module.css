@@ -1,0 +1,23 @@
+.navbarItems{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Search input with search icon from public/search.svg */
+.searchInput{
+    padding: 8px 12px 8px 36px; /* padding to make room for icon */
+    background-image: url('/search.svg');
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    background-size: 16px 16px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+/*Rounded Profile Pic */
+.profilePic{
+    border-radius: 50%;
+}
