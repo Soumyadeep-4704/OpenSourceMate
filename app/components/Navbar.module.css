@@ -1,23 +1,109 @@
-.navbarItems{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+.navbarItems {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Search input with search icon from public/search.svg */
-.searchInput{
-    padding: 8px 12px 8px 36px; /* padding to make room for icon */
-    background-image: url('/search.svg');
-    background-repeat: no-repeat;
-    background-position: 10px center;
-    background-size: 16px 16px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 14px;
+.searchInput {
+  padding: 8px 12px 8px 36px;
+  background-image: url("/search.svg");
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  background-size: 14px 14px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 14px;
+  width: 80%;
 }
 
 /*Rounded Profile Pic */
-.profilePic{
-    border-radius: 50%;
+.profilePic {
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Wrapper that wraps the image and dropdown menu */
+.profileWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Menu */
+.dropdownMenu {
+  position: absolute;
+  right: 0;
+  top: 120%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px #0000001a;
+  padding: 8px;
+  min-width: 160px;
+  z-index: 10;
+  overflow: hidden;
+  animation: fadeIn 0.1s ease-out;
+}
+
+/* Inside of the Drpdown Menu */
+.dropdownMenu a {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 4px;
+  color: #333;
+  text-decoration: none;
+}
+
+.dropdownMenu button {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 8px 12px;
+  border: none;
+  background-color: #0ed7a8;
+  cursor: pointer;
+  border-radius: 4px;
+  color: #333;
+  text-decoration: none;
+}
+
+/* Login Button */
+.login {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 10px 10px;
+  background-color: #0ed7a8;
+  cursor: pointer;
+  border-radius: 4px;
+  color: #333;
+  font: bold;
+  text-decoration: none;
+  border: none;
+}
+/* ************************************* */
+/* Hover Effets */
+.dropdownMenu button:hover {
+  background-color: #46f0c8;
+}
+
+.dropdownMenu a:hover {
+  background-color: #f0f0f0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

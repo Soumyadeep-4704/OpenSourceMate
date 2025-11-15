@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Hero from "./components/Hero";
 
 
 //HomePage
@@ -6,7 +7,7 @@ export default function Home() {
   return (
     <>
       <main>
-        <h1>Hello, World!</h1>
+        <Hero />
       </main>
     </>
   );
