@@ -1,5 +1,3 @@
-// This file holds all our mock data for the dashboard.
-
 export const currentIssue = {
   id: "osm-123",
   title: "Refactor Authentication Flow",
@@ -10,7 +8,7 @@ export const currentIssue = {
 export const recentIssues = [
   { id: "osm-122", title: "Fix: Google Client ID Typo", status: "Closed" },
   { id: "osm-121", title: "Feat: Add Tailwind CSS", status: "Closed" },
-  { id: "osm-120", title: "Feat: Implement Profile Dropdown", status: "In Progress" },
+  { id: "osm-120", title: "Feat: Implement Profile Dropdown", status: "Closed" },
   { id: "osm-119", title: "Bug: Navbar `useSate` typo", status: "Closed" },
   { id: "osm-118", title: "Feat: Add Hero Section Gradient", status: "In Progress" },
   { id: "osm-117", title: "Docs: Update README", status: "Open" },
