@@ -3,6 +3,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 8px 10px;
 }
 
 /* Search input with search icon from public/search.svg */
@@ -78,7 +79,7 @@
   display: block;
   width: 100%;
   text-align: center;
-  padding: 10px 10px;
+  padding: 8px 10px;
   background-color: #0ed7a8;
   cursor: pointer;
   border-radius: 4px;
