@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 
 export default async function IssueDetail({params}) {
-  const { id } = params; 
+  const { id } = await params; 
 
   // Find the issue data using the helper function
   const issue = findIssueById(id);
@@ -23,9 +23,9 @@ export default async function IssueDetail({params}) {
   // ------------------------------------
 
   const statusColor = 
-    issue.status === 'Closed' ? 'bg-green-100 text-green-800' :
-    issue.status === 'In Progress' ? 'bg-blue-100 text-blue-800' :
-    'bg-gray-100 text-gray-800';
+    issue.status === 'Closed' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' :
+    issue.status === 'In Progress' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300' :
+    'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-start p-4 md:p-12">
@@ -36,12 +36,12 @@ export default async function IssueDetail({params}) {
             &larr; Back to Dashboard
           </Link>
           <div className="flex justify-between items-center mt-2">
-            <h1 className="text-3xl font-bold text-gray-900">{issue.title}</h1>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{issue.title}</h1>
             <span className={`text-sm font-semibold px-3 py-1 rounded-full ${statusColor}`}>
               {issue.status || 'Open'}
             </span>
           </div>
-          <span className="text-sm font-medium text-gray-500 mt-1">
+          <span className="text-sm font-medium text-gray-500 mt-1 dark:text-gray-300">
             Issue ID: #{issue.id.toUpperCase()}
           </span>
         </div>
@@ -52,21 +52,21 @@ export default async function IssueDetail({params}) {
           {/* Left Column: Description & Commits */}
           <div className="lg:col-span-2 space-y-6">
             {/* Description */}
-            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-900 mb-3">Description</h2>
-              <p className="text-gray-600 leading-relaxed">
+            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+              <h2 className="text-lg font-semibold text-gray-900 mb-3 dark:text-white">Description</h2>
+              <p className="text-gray-600 leading-relaxed dark:text-gray-300">
                 {issue.description || "No description provided for this issue."}
               </p>
             </div>
 
             {/* Commit History */}
-            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-900 mb-3">Related Commits</h2>
+            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+              <h2 className="text-lg font-semibold text-gray-900 mb-3 dark:text-white">Related Commits</h2>
               <ul className="space-y-4">
                 {commitHistory.map(commit => (
-                  <li key={commit.sha} className="border-b border-gray-100 pb-3 last:border-b-0">
-                    <p className="font-medium text-gray-800">{commit.message}</p>
-                    <span className="text-sm text-gray-500 font-mono">
+                  <li key={commit.sha} className="border-b border-gray-100 pb-3 last:border-b-0 dark:border-gray-700">
+                    <p className="font-medium text-gray-800 dark:text-gray-300">{commit.message}</p>
+                    <span className="text-sm text-gray-500 font-mono dark:text-gray-300">
                       {commit.sha} by {commit.author}
                     </span>
                   </li>
@@ -75,21 +75,21 @@ export default async function IssueDetail({params}) {
             </div>
           </div>
 
-          {/* Right Column: Stats & People */}
+          {/* Right Column: Asignee, People nad Labels */}
           <div className="space-y-6">
-            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-900 mb-3">Details</h2>
+            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+              <h2 className="text-lg font-semibold text-gray-900 mb-3 dark:text-white">Details</h2>
               <ul className="space-y-3">
                 <li className="flex justify-between">
-                  <span className="text-gray-600">Assignee:</span>
-                  <span className="font-medium text-gray-900">You</span>
+                  <span className="text-gray-600 dark:text-gray-300">Assignee:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">You</span>
                 </li>
                 <li className="flex justify-between">
-                  <span className="text-gray-600">Reporter:</span>
-                  <span className="font-medium text-gray-900">Jane Doe</span>
+                  <span className="text-gray-600 dark:text-gray-300">Reporter:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">Jane Doe</span>
                 </li>
                 <li className="flex justify-between">
-                  <span className="text-gray-600">Labels:</span>
+                  <span className="text-gray-600 dark:text-gray-300">Labels:</span>
                   <div className="flex flex-wrap gap-1 justify-end">
                     <span className="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                       bug

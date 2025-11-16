@@ -109,3 +109,13 @@
     transform: translateY(0);
   }
 }
+
+/* Dark Mode styles*/
+@media (prefers-color-scheme: dark) {
+  /* Search Input in dark mode */
+  .searchInput {
+    background-image: url("/darkSearch.svg");
+    color: #f0f0f0;
+    border: 1px solid #f0f0f0;
+  }
+}

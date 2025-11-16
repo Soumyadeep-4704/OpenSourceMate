@@ -8,11 +8,9 @@ import IssueDashboard from "./components/IssueDashboard";
 export default function Home() {
   return (
     <>
-      <main>
         <Hero />
         <IssueDashboard />
         <footer></footer>
-      </main>
     </>
   );
 }

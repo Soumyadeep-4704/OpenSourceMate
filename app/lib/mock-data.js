@@ -28,9 +28,9 @@ export const chartData = [
 
 // This function will find an issue from *any* of our mock data lists
 export function findIssueById(id) {
-  // Combine all our issues into one list to search
+  // Combining all issues into one list to search
   const allIssues = [currentIssue, ...recentIssues];
   
-  // Find the issue that matches the id
+  // Finds the issue that matches the id
   return allIssues.find(issue => issue.id === id);
 }
