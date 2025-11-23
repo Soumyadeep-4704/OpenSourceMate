@@ -3,6 +3,11 @@ import AuthProvider from "./components/AuthProvider";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
+// Displaying the name of the webpage in the tab tile
+export const metadata = {
+  title: "OpenSourceMate",
+};
+
 //Global
 export default function Layout({ children }) {
   return (
