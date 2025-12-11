@@ -3,14 +3,14 @@
 import { SessionProvider } from "next-auth/react";
 import { useState, useEffect, createContext, useContext } from "react";
 
-//Theme Context
+// Theme Context
 const ThemeContext = createContext(null);
 
 // AuthProvider component
 export default function AuthProvider({ children }) {
   const [theme, setTheme] = useState('light');
 
-  //Initial load theme
+  // Initial load theme
   useEffect(() => {
     // Check for localStorage or system preference
     const savedTheme = localStorage.getItem('theme');
@@ -44,7 +44,7 @@ export default function AuthProvider({ children }) {
   );
 }
 
-// 6. Create a custom hook to easily access the theme
+// Create a custom hook to easily access the theme
 export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (!context) {

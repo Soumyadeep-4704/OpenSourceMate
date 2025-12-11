@@ -14,7 +14,9 @@ export default function Layout({ children }) {
     <html lang="en" suppressHydrationWarning>
       {/* Adding default dark background and transition-colors for a smooth theme change.
       */}
-      <body className="bg-white dark:bg-gray-900 transition-colors duration-200">
+      <body 
+      className="bg-white dark:bg-gray-900 transition-colors duration-200"
+      suppressHydrationWarning={true}>
         <AuthProvider>
           <Navbar />
 
