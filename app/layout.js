@@ -2,6 +2,7 @@ import "./globals.css";
 import AuthProvider from "./components/AuthProvider";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 // Displaying the name of the webpage in the tab tile
 export const metadata = {
@@ -24,6 +25,7 @@ export default function Layout({ children }) {
           <main>{children}</main>
           <Footer />
         </AuthProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
