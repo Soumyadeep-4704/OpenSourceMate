@@ -18,7 +18,11 @@ export default function IssueDashboard() {
     async function fetchGitHubIssues() {
       if (status === "authenticated" && session?.accessToken) {
         try {
-          const res = await fetch("https://api.github.com/issues?filter=all&state=open&per_page=100", {
+          
+          // USing OR operator properly and the Github API searches for all thhe issues that is opened by the user, mentions user, or assigned to user.
+          const query = encodeURIComponent("is:issue is:open involves:@me");
+          
+          const res = await fetch(`https://api.github.com/search/issues?q=${query}&sort=updated&per_page=100`, {
             headers: {
               Authorization: `Bearer ${session.accessToken}`,
               Accept: "application/vnd.github.v3+json",
@@ -26,22 +30,34 @@ export default function IssueDashboard() {
           });
           
           if (res.ok) {
-            // FIX: Renamed 'data' to 'issuesData' to avoid conflicts and clarity
-            const issuesData = await res.json();
+            const data = await res.json();
+            const issuesData = data.items || []; // Ensure items is an array
             
-            // 1. Process Issues List
-            const formattedIssues = issuesData.map(issue => ({
-              id: `${issue.repository.owner.login}__${issue.repository.name}__${issue.number}`, 
-              title: issue.title,
-              status: issue.state === 'open' ? 'In Progress' : 'Closed', 
-              description: issue.body,
-              tags: issue.labels.map(l => l.name),
-              displayId: `#${issue.number}`,
-              updatedAt: issue.updated_at 
-            }));
+            // Processes Issues List
+            const formattedIssues = issuesData.map(issue => {
+              // Safe parsing of repository URL added
+              let repoOwner = 'unknown';
+              let repoName = 'unknown';
+              
+              if (issue.repository_url) {
+                  const parts = issue.repository_url.split('/');
+                  repoOwner = parts[parts.length - 2];
+                  repoName = parts[parts.length - 1];
+              }
+
+              return {
+                id: `${repoOwner}__${repoName}__${issue.number}`, 
+                title: issue.title,
+                status: issue.state === 'open' ? 'In Progress' : 'Closed', 
+                description: issue.body,
+                tags: issue.labels ? issue.labels.map(l => l.name) : [],
+                displayId: `#${issue.number}`,
+                updatedAt: issue.updated_at 
+              };
+            });
             setIssues(formattedIssues);
 
-            // 2. Process Chart Data (Last 7 Days Activity)
+            // Processes Chart Data (Last 7 Days Activity)
             const last7Days = [...Array(7)].map((_, i) => {
                 const d = new Date();
                 d.setDate(d.getDate() - i);
@@ -49,9 +65,8 @@ export default function IssueDashboard() {
             }).reverse();
 
             const activityData = last7Days.map(date => {
-                // FIX: Used 'issuesData' here instead of 'data'
                 const count = issuesData.filter(issue => 
-                    issue.updated_at.startsWith(date)
+                    issue.updated_at && issue.updated_at.startsWith(date)
                 ).length;
                 
                 const dayName = new Date(date).toLocaleDateString('en-US', { weekday: 'short' });
@@ -61,10 +76,17 @@ export default function IssueDashboard() {
             setChartData(activityData);
 
           } else {
-            console.error("GitHub API Error:", res.status);
+            // FIX: Gracefully handle errors without crashing
+            console.warn("GitHub API returned status:", res.status); 
+            // Only log error if it's strictly an error, 422 might just be "invalid query"
+            if (res.status !== 422) {
+                 console.error("GitHub API Error Details:", await res.text());
+            }
+            setIssues([]); 
           }
         } catch (error) {
           console.error("Failed to fetch issues:", error);
+          setIssues([]);
         } finally {
           setLoading(false);
         }
@@ -94,7 +116,7 @@ export default function IssueDashboard() {
 
   return (
     <div className="w-full max-w-6xl mx-auto p-4 md:p-8">
-      {/* 1. TOP SECTION */}
+      {/* TOP SECTION */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         
         {/* Left Column: Current Issue */}
@@ -125,7 +147,7 @@ export default function IssueDashboard() {
              <div className="flex flex-col items-center justify-center h-full min-h-[200px]">
                 <p className="text-gray-500 dark:text-gray-400 font-medium">No open issues found!</p>
                 <p className="text-sm text-gray-400 mt-2 text-center max-w-md">
-                  Issues assigned to you in GitHub repositories will appear here.
+                  Issues created by you, assigned to you, or mentioning you will appear here automatically.
                 </p>
              </div>
           )}
@@ -151,7 +173,7 @@ export default function IssueDashboard() {
         </div>
       </div>
 
-      {/* 2. BOTTOM SECTION */}
+      {/* BOTTOM SECTION */}
       <div>
         <h2 className="text-xl font-bold text-gray-900 mb-4 dark:text-white">
           Recent Issues
