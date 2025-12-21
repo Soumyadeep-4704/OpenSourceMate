@@ -1,6 +1,6 @@
 # OpenSourceMate
 
-[OpenSourceMate](https://open-source-mate-g5x299ico-soumyadeeps-projects-b07bfc41.vercel.app/) is a modern, developer-friendly dashboard designed to streamline your open-source workflow. It connects directly to your GitHub account to visualize your assigned issues, track your contribution activity, and manage your tasks efficiently.
+[OpenSourceMate](https://open-source-mate.vercel.app/) is a modern, developer-friendly dashboard designed to streamline your open-source workflow. It connects directly to your GitHub account to visualize your assigned issues, track your contribution activity, and manage your tasks efficiently.
 
 ## 🎥 Demo
 
