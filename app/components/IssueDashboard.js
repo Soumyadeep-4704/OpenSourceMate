@@ -18,8 +18,12 @@ export default function IssueDashboard() {
     async function fetchGitHubIssues() {
       if (status === "authenticated" && session?.accessToken) {
         try {
+          // FIX: Simplified query syntax. 
+          // The search API treats space-separated terms as AND by default.
+          // To do OR, we must be explicit. However, GitHub sometimes rejects complex ORs.
+          // Our query that asks for "is:open is:issue" AND one of the user qualifiers.
+         // USing OR operator properly and the Github API searches for all thhe issues that is opened by the user, mentions user, or assigned to user.
           
-          // USing OR operator properly and the Github API searches for all thhe issues that is opened by the user, mentions user, or assigned to user.
           const query = encodeURIComponent("is:issue is:open involves:@me");
           
           const res = await fetch(`https://api.github.com/search/issues?q=${query}&sort=updated&per_page=100`, {
@@ -33,9 +37,9 @@ export default function IssueDashboard() {
             const data = await res.json();
             const issuesData = data.items || []; // Ensure items is an array
             
-            // Processes Issues List
+            // Process Issues List
             const formattedIssues = issuesData.map(issue => {
-              // Safe parsing of repository URL added
+              // Added Safe parsing of repository URL
               let repoOwner = 'unknown';
               let repoName = 'unknown';
               
@@ -57,7 +61,7 @@ export default function IssueDashboard() {
             });
             setIssues(formattedIssues);
 
-            // Processes Chart Data (Last 7 Days Activity)
+            // Process Chart Data (Last 7 Days Activity)
             const last7Days = [...Array(7)].map((_, i) => {
                 const d = new Date();
                 d.setDate(d.getDate() - i);
