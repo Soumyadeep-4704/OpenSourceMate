@@ -17,7 +17,7 @@ const DashChart = ({ data = [] }) => {
   const isDark = theme === 'dark';
   // Define colors based on theme
   const axisColor = isDark ? '#9ca3af' : '#6b7280';
-  const barColor = isDark ? '#3b82f6' : '#1a73e8';
+  const barColor = isDark ? '#0ed7a8' : '#35e579fa';
   const gridColor = isDark ? '#374151' : '#e0e0e0';
   const tooltipBg = isDark ? '#1f2937' : '#ffffff';
   const tooltipBorder = isDark ? '#374151' : '#ccc';
