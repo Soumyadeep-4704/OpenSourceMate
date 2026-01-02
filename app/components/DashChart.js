@@ -9,7 +9,7 @@ import {
   Tooltip, 
   CartesianGrid 
 } from 'recharts';
-import { useTheme } from "@/app/components/AuthProvider";
+import { useTheme } from "./AuthProvider";
 
 const DashChart = ({ data = [] }) => {
   const { theme } = useTheme();

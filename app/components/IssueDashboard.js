@@ -13,12 +13,52 @@ export default function IssueDashboard() {
   const [issues, setIssues] = useState([]);
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  // AI Integration State
+  const [trendingIssues, setTrendingIssues] = useState([]);
+  const [aiLoading, setAiLoading] = useState(true);
+
+  // Fetch AI Recommendations (Running in parallel with GitHub data)
+  useEffect(() => {
+    async function fetchAiTrending() {
+      try {
+        // Fetch from our Python AI Backend
+        const res = await fetch("http://localhost:8000/api/recommendations/trending?language=javascript");
+        
+        if (res.ok) {
+          const data = await res.json();
+          // Transform AI data to match IssueCard format
+          const formattedTrending = data.issues.map((issue) => {
+            // Construct ID compatible with our [id] page: owner__repo__number
+            const [owner, name] = issue.repo.split("/");
+            const number = issue.url.split("/").pop(); 
+            
+            return {
+              id: `${owner}__${name}__${number}`,
+              title: issue.title, 
+              description: `🔥 Trending in ${issue.repo} with ${issue.comments} comments and ${issue.reactions} reactions.`,
+              tags: [], // Removed tags completely so no "Trending" or "AI Recommended" badges appear
+              displayId: `#${number}`,
+              updatedAt: new Date().toISOString(), // Timestamp not in simple AI response, defaulting to now
+            };
+          });
+          setTrendingIssues(formattedTrending);
+        }
+      } catch (error) {
+        console.error("AI Service unavailable:", error);
+      } finally {
+        setAiLoading(false);
+      }
+    }
+
+    fetchAiTrending();
+  }, []);
 
   useEffect(() => {
     async function fetchGitHubIssues() {
       if (status === "authenticated" && session?.accessToken) {
         try {
-          // FIX: Simplified query syntax.
+          // Simplified query syntax.
           // The search API treats space-separated terms as AND by default.
           // To do OR, we must be explicit. However, GitHub sometimes rejects complex ORs.
           // Our query that asks for "is:open is:issue" AND one of the user qualifiers.
@@ -217,6 +257,36 @@ export default function IssueDashboard() {
               {showMore ? "Show Less" : "Show More"}
             </button>
           </div>
+        )}
+      </div>
+      
+      {/* AI RECOMMENDATIONS SECTION */}
+      <div className="mt-12">
+        <div className="flex items-center gap-2 mb-4">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+            AI Recommended for You
+            </h2>
+            {/* Removed the 'Trending' span badge from here */}
+        </div>
+        
+        {aiLoading ? (
+             <div className="flex py-8 items-center justify-center text-gray-400 animate-pulse">
+                Fetching AI insights...
+             </div>
+        ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {trendingIssues.length > 0 ? (
+                trendingIssues.map((issue) => (
+                <IssueCard key={issue.id} issue={issue} />
+                ))
+            ) : (
+                <div className="col-span-full text-center py-8">
+                <p className="text-gray-500 italic">
+                    AI could not find recommendations at this time.
+                </p>
+                </div>
+            )}
+            </div>
         )}
       </div>
     </div>

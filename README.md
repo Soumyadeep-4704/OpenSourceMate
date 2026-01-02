@@ -94,53 +94,50 @@ Open http://localhost:3000 with your browser to see the result.
 ## 📂 File Structure
 ```
 opensourcemate/
+├── app/
+│   ├── account-settings/
+│   │   └── page.js            # Settings page
+│   ├── api/
+│   │   └── auth/
+│   │       └── [...nextauth]/
+│   │           └── route.js   # NextAuth handler
+│   ├── components/
+│   │   ├── AuthProvider.js    # Auth & Theme context
+│   │   ├── DashChart.js       # Activity chart
+│   │   ├── Hero.js            # Login/Welcome screen
+│   │   ├── IssueCard.js       # Issue display component
+│   │   ├── IssueDashboard.js  # Main dashboard logic
+│   │   └── Navbar.js          # Top navigation bar
+│   ├── issue/
+│   │   └── [id]/
+│   │       └── page.js        # Issue details page
+│   ├── profile/
+│   │   └── page.js            # User profile page
+│   ├── search/
+│   │   └── page.js            # Search results page
+│   ├── favicon.ico
+│   ├── globals.css            # Global styles
+│   ├── layout.js              # Root layout
+│   └── page.js                # Home page
+├── public/
+│   ├── api.svg                # Logo
+│   └── search.svg             # Search icon
+│   └── darkSearch.svg         # Search icon for dark mode
 ├── ai_modules/
+│   ├── requirements.txt
 │   ├── app/
-│   │   ├── __init__.py
-│   │   ├── main.py
-│   │   ├── routers.py
-│   │   └── __pycache__/
-│   └── requirements.txt
-├── frontend_modules/
-│   ├── app/
-│   │   ├── account-settings/
-│   │   │   └── page.js
-│   │   ├── api/
-│   │   │   └── auth/[...nextauth]/
-│   │   │       └── route.js
-│   │   ├── components/
-│   │   │   ├── AuthProvider.js
-│   │   │   ├── DashChart.js
-│   │   │   ├── Footer.js
-│   │   │   ├── Hero.js
-│   │   │   ├── IssueCard.js
-│   │   │   ├── IssueDashboard.js
-│   │   │   ├── Navbar.js
-│   │   │   └── Navbar.module.css
-│   │   ├── issue/[id]/
-│   │   │   └── page.js
-│   │   ├── profile/
-│   │   │   └── page.js
-│   │   ├── search/
-│   │   │   └── page.js
-│   │   ├── favicon.ico
-│   │   ├── globals.css
-│   │   ├── layout.js
-│   │   └── page.js
-│   ├── public/
-│   │   ├── api.svg
-│   │   ├── darkSearch.svg
-│   │   └── search.svg
-│   ├── eslint.config.mjs
-│   ├── jsconfig.json
-│   ├── next.config.mjs
-│   ├── package-lock.json
-│   ├── package.json
-│   └── postcss.config.mjs
-├── .gitignore
-├── CONTRIBUTION.md
-├── LICENSE
+│   │   ├── __init__.py   
+│   │   ├── main.py       
+│   │   ├── routers.py                
+├── eslint.config.mjs
+├── jsconfig.json
+├── next.config.mjs
+├── package.json
+├── postcss.config.mjs
+├── tailwind.config.mjs
 └── README.md
+└── CONTRIBUTION.md
+└── LICENSE                
 ```
 
 ## 🤝 Contributing

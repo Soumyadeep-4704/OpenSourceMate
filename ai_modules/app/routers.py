@@ -19,7 +19,7 @@ class SocialGraph(BaseModel):
 # --- Configuration ---
 # ideally, load this from .env
 GITHUB_API_URL = "https://api.github.com"
-# GITHUB_TOKEN = os.getenv("GITHUB_TOKEN") # Uncomment if you add a token to .env
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN") # Uncomment if added a token to .env
 
 # --- Helper: GitHub API Client ---
 async def fetch_github(url: str, params: dict = None):
