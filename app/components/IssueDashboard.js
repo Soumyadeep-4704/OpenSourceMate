@@ -23,6 +23,7 @@ export default function IssueDashboard() {
     async function fetchAiTrending() {
       try {
         // Fetch from our Python AI Backend
+        // Use environment variable for production, fallback to localhost for dev
         const apiUrl = process.env.NEXT_PUBLIC_AI_API_URL || "http://localhost:8000";
         const res = await fetch(`${apiUrl}/api/recommendations/trending?language=javascript`);
         
