@@ -31,7 +31,7 @@ export default function IssueDashboard() {
             apiUrl = apiUrl.slice(0, -1);
         }
 
-        console.log("Fetching AI recommendations from:", apiUrl);
+        // console.log("Fetching AI recommendations from:", apiUrl);  //Added for debugging
 
         const res = await fetch(`${apiUrl}/api/recommendations/trending?language=javascript`);
         
@@ -47,7 +47,7 @@ export default function IssueDashboard() {
               id: `${owner}__${name}__${number}`,
               title: issue.title, 
               description: `🔥 Trending in ${issue.repo} with ${issue.comments} comments and ${issue.reactions} reactions.`,
-              tags: ["Trending"],
+              tags: [], 
               displayId: `#${number}`,
               updatedAt: new Date().toISOString(), // Timestamp not in simple AI response, defaulting to now
             };
@@ -138,7 +138,7 @@ export default function IssueDashboard() {
 
             setChartData(activityData);
           } else {
-            // FIX: Gracefully handle errors without crashing
+            // Handle errors without crashing
             console.warn("GitHub API returned status:", res.status);
             // Only log error if it's strictly an error, 422 might just be "invalid query"
             if (res.status !== 422) {
@@ -278,9 +278,11 @@ export default function IssueDashboard() {
             <h2 className="text-xl font-bold text-gray-900 dark:text-white">
             AI Recommended for You
             </h2>
-            {/* Removed the 'Trending' span badge from here */}
+            <span className="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">
+                Trending
+            </span>
         </div>
-        
+
         {aiLoading ? (
              <div className="flex py-8 items-center justify-center text-gray-400 animate-pulse">
                 Fetching AI insights...
