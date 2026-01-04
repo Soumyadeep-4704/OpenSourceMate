@@ -10,10 +10,11 @@ app = FastAPI(
 )
 
 # Configure CORS (Cross-Origin Resource Sharing)
-# This allows your Next.js app (running on localhost:3000) to talk to this Python backend.
+# This allows the Next.js app (running on localhost:3000) to talk to this Python backend.
 origins = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://open-source-mate.vercel.app",
 ]
 
 app.add_middleware(
