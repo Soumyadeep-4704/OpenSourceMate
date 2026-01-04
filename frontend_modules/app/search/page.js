@@ -1,6 +1,6 @@
 
 import Link from "next/link";
-import IssueCard from "@/app/components/IssueCard";
+import IssueCard from "@/components/IssueCard";
 
 export default async function SearchPage({ searchParams }) {
   // Await the searchParams to extract the query 'q'
