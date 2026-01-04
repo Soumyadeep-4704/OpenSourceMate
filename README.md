@@ -62,6 +62,7 @@ We have detailed documentation available on Notion covering the architecture, co
 ### Deployment
 
 <b> Frontend: </b> Vercel
+
 <b> Backend: </b> Render
 
 
