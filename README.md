@@ -1,6 +1,9 @@
-# OpenSourceMate
+# OpenSourceMate 🤝 -->
 
-[OpenSourceMate](https://open-source-mate.vercel.app/) is a modern, developer-friendly dashboard designed to streamline your open-source workflow. It connects directly to your GitHub account to visualize your assigned issues, track your contribution activity, and manage your tasks efficiently.
+### Your AI-powered companion for navigating the open-source world.
+
+[OpenSourceMate](https://open-source-mate.vercel.app) is a modern web application designed to help developers discover relevant open-source issues, track trending repositories, and find projects that match their skills and network. It combines a sleek Next.js frontend with a powerful Python (FastAPI) backend to deliver intelligent recommendations.
+
 
 ## 🎥 Demo
 
@@ -20,6 +23,8 @@ We have detailed documentation available on Notion covering the architecture, co
 
 ## ✨ Features
 
+<b>🚀 AI-Powered Recommendations: </b>  Identifies and highlights trending issues by analyzing user engagement and overall momentum.
+
 <b> 🔐 Secure Authentication: </b> Log in seamlessly using your GitHub or Google account via NextAuth.js.
 
 <b> 📊 Real-Time Dashboard: </b> View your latest assigned task and a snapshot of your recent issues directly from GitHub.
@@ -34,6 +39,8 @@ We have detailed documentation available on Notion covering the architecture, co
 
 ## 🛠️ Tech Stack
 
+### Frontend (`frontend_modules`)
+
 <b> Framework: </b> Next.js 14+ (App Router)
 
 <b> Styling: </b> Tailwind CSS
@@ -44,6 +51,20 @@ We have detailed documentation available on Notion covering the architecture, co
 
 <b> Icons: </b> Custom SVGs & Heroicons
 
+### Backend (`ai_modules`)
+
+<b> Framework </b>: FastAPI (Python)
+
+<b> Data Processing </b>: Pandas / NumPy (planned for advanced analytics)
+
+<b> API Client </b>: HTTPX (Async GitHub API requests)
+
+### Deployment
+
+<b> Frontend: </b> Vercel
+<b> Backend: </b> Render
+
+
 ## 🚀 Getting Started
 
 <b> Follow these steps to run the project locally. </b>
@@ -52,7 +73,9 @@ We have detailed documentation available on Notion covering the architecture, co
 
 Node.js 18+ installed
 
-A GitHub OAuth App (for GitHub Auth)
+Python (v3.10+)
+
+A GitHub Account (to generate tokens)
 
 ## Installation
 
@@ -62,6 +85,13 @@ A GitHub OAuth App (for GitHub Auth)
 git clone
 cd opensourcemate
 ```
+## 1. Frontend Setup (Next.js)
+
+### Navigate to the Frontend directory:
+
+```
+cd frontend_modules
+```
 
 ### Install dependencies:
 
@@ -69,9 +99,8 @@ cd opensourcemate
 npm install
 ```
 
-
 ### Set up Environment Variables:
-Create a .env.local file in the root directory and add the following keys:
+Create a .env.local file inside the frontend_modules/ and add the following keys:
 
 ```
 # NextAuth Configuration
@@ -90,6 +119,45 @@ npm run dev
 ```
 
 Open http://localhost:3000 with your browser to see the result.
+
+# 2. Backend Setup (Python)
+
+### Navigate to the AI directory and set up the environment:
+
+```
+cd ai_modules
+
+### Create a virtual environment
+python -m venv venv
+
+### Activate it
+### Windows:
+venv\Scripts\activate
+### Mac/Linux:
+source venv/bin/activate
+```
+
+### Install dependencies
+
+```
+pip install -r requirements.txt
+```
+
+### Configuration:
+Create a .env file inside ai_modules/ and add the following:
+
+```
+# GitHub Personal Access Token (Classic) with 'public_repo' scope
+GITHUB_TOKEN=your_github_pat_here
+```
+
+### Run the Server:
+
+```
+uvicorn app.main:app --reload --port 8000
+```
+
+The backend is now running at http://localhost:8000
 
 ## 📂 File Structure
 ```
