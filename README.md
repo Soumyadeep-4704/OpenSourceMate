@@ -1,6 +1,6 @@
-# OpenSourceMate 🤝 -->
+# OpenSourceMate 
 
-### Your AI-powered companion for navigating the open-source world.
+### 🤖 Your AI-powered companion for navigating the open-source world.
 
 [OpenSourceMate](https://open-source-mate.vercel.app) is a modern web application designed to help developers discover relevant open-source issues, track trending repositories, and find projects that match their skills and network. It combines a sleek Next.js frontend with a powerful Python (FastAPI) backend to deliver intelligent recommendations.
 
