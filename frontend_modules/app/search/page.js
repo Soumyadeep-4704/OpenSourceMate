@@ -1,4 +1,4 @@
-import { searchIssues } from "@/app/lib/mock-data";
+
 import Link from "next/link";
 import IssueCard from "@/app/components/IssueCard";
 
