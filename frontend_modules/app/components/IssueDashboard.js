@@ -47,7 +47,7 @@ export default function IssueDashboard() {
               id: `${owner}__${name}__${number}`,
               title: issue.title, 
               description: `🔥 Trending in ${issue.repo} with ${issue.comments} comments and ${issue.reactions} reactions.`,
-              tags: [], // Removed tags completely so no "Trending" or "AI Recommended" badges appear
+              tags: ["Trending"],
               displayId: `#${number}`,
               updatedAt: new Date().toISOString(), // Timestamp not in simple AI response, defaulting to now
             };
