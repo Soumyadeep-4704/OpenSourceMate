@@ -23,8 +23,16 @@ export default function IssueDashboard() {
     async function fetchAiTrending() {
       try {
         // Fetch from our Python AI Backend
-        // Use environment variable for production, fallback to localhost for dev
-        const apiUrl = process.env.NEXT_PUBLIC_AI_API_URL || "http://localhost:8000";
+        // Uses environment variable for production, fallback to localhost for dev
+        let apiUrl = process.env.NEXT_PUBLIC_AI_API_URL || "http://localhost:8000";
+        
+        // Remove trailing slash if present to avoid double slashes in URL
+        if (apiUrl.endsWith('/')) {
+            apiUrl = apiUrl.slice(0, -1);
+        }
+
+        console.log("Fetching AI recommendations from:", apiUrl);
+
         const res = await fetch(`${apiUrl}/api/recommendations/trending?language=javascript`);
         
         if (res.ok) {
@@ -45,6 +53,8 @@ export default function IssueDashboard() {
             };
           });
           setTrendingIssues(formattedTrending);
+        } else {
+             console.error("AI Backend returned error:", res.status);
         }
       } catch (error) {
         console.error("AI Service unavailable:", error);
