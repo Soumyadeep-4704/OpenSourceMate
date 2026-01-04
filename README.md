@@ -7,7 +7,7 @@
 Check out the project in action!
 
 
-▶️ [Click here below to watch the Demo Video](https://drive.google.com/drive/folders/1jDOZ0_3HMjWvFJC8YHdW4qlv5Yi_OMx4?usp=sharing)
+▶️ [Click here below to watch the Demo Video](https://drive.google.com/file/d/1mm9S3e-1mr4l-WRBGTbLUCUcn3oShFlR/view?usp=drive_link)
 
 <b> Note: </b> The demo video above was recorded using mock data to showcase the UI flow. The actual application code now pulls real-time data directly from the GitHub API based on the logged-in user's assignments. Additionally, Google authentication has been removed, and we have switched to GitHub authentication only.
 
