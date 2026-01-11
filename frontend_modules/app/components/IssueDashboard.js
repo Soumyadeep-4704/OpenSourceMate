@@ -22,8 +22,8 @@ export default function IssueDashboard() {
   useEffect(() => {
     async function fetchAiTrending() {
       try {
-        // Fetch from Python AI Backend
-        // Using environment variable for production, fallback to localhost for dev
+        // Fetch from our Python AI Backend
+        // CHANGED: Use environment variable for production, fallback to localhost for dev
         let apiUrl = process.env.NEXT_PUBLIC_AI_API_URL || "http://localhost:8000";
         
         // Remove trailing slash if present to avoid double slashes in URL
@@ -34,11 +34,20 @@ export default function IssueDashboard() {
         console.log("Fetching AI recommendations from:", apiUrl);
 
         // CACHE BUSTING:
-        // Added timestamp parameter `_t` to force browser to see it as a new URL
-        // Added { cache: 'no-store' } for good measure
+        // 1. Added timestamp parameter `_t` to force browser to see it as a new URL
+        // 2. Added { cache: 'no-store' }
+        // 3. Added strict HTTP headers (Cache-Control, Pragma) to prevent browser caching
         const res = await fetch(
             `${apiUrl}/api/recommendations/trending?language=javascript&_t=${new Date().getTime()}`, 
-            { cache: 'no-store' }
+            { 
+              cache: 'no-store',
+              headers: {
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Pragma': 'no-cache',
+                'Expires': '0'
+              },
+              next: { revalidate: 0 }
+            }
         );
         
         if (res.ok) {
@@ -144,7 +153,7 @@ export default function IssueDashboard() {
 
             setChartData(activityData);
           } else {
-            // Gracefully handle errors without crashing
+            // Handle errors without crashing
             console.warn("GitHub API returned status:", res.status);
             // Only log error if it's strictly an error, 422 might just be "invalid query"
             if (res.status !== 422) {
