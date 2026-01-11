@@ -22,8 +22,8 @@ export default function IssueDashboard() {
   useEffect(() => {
     async function fetchAiTrending() {
       try {
-        // Fetch from our Python AI Backend
-        // Uses environment variable for production, fallback to localhost for dev
+        // Fetch from Python AI Backend
+        // Using environment variable for production, fallback to localhost for dev
         let apiUrl = process.env.NEXT_PUBLIC_AI_API_URL || "http://localhost:8000";
         
         // Remove trailing slash if present to avoid double slashes in URL
@@ -31,9 +31,15 @@ export default function IssueDashboard() {
             apiUrl = apiUrl.slice(0, -1);
         }
 
-        // console.log("Fetching AI recommendations from:", apiUrl);  //Added for debugging
+        console.log("Fetching AI recommendations from:", apiUrl);
 
-        const res = await fetch(`${apiUrl}/api/recommendations/trending?language=javascript`);
+        // CACHE BUSTING:
+        // Added timestamp parameter `_t` to force browser to see it as a new URL
+        // Added { cache: 'no-store' } for good measure
+        const res = await fetch(
+            `${apiUrl}/api/recommendations/trending?language=javascript&_t=${new Date().getTime()}`, 
+            { cache: 'no-store' }
+        );
         
         if (res.ok) {
           const data = await res.json();
@@ -45,9 +51,9 @@ export default function IssueDashboard() {
             
             return {
               id: `${owner}__${name}__${number}`,
-              title: issue.title, 
+              title: issue.title,
               description: `🔥 Trending in ${issue.repo} with ${issue.comments} comments and ${issue.reactions} reactions.`,
-              tags: [], 
+              tags: [], // Removed tags completely so no "Trending" or "AI Recommended" badges appear
               displayId: `#${number}`,
               updatedAt: new Date().toISOString(), // Timestamp not in simple AI response, defaulting to now
             };
@@ -138,7 +144,7 @@ export default function IssueDashboard() {
 
             setChartData(activityData);
           } else {
-            // Handle errors without crashing
+            // Gracefully handle errors without crashing
             console.warn("GitHub API returned status:", res.status);
             // Only log error if it's strictly an error, 422 might just be "invalid query"
             if (res.status !== 422) {
@@ -278,11 +284,11 @@ export default function IssueDashboard() {
             <h2 className="text-xl font-bold text-gray-900 dark:text-white">
             AI Recommended for You
             </h2>
-            <span className="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">
+             <span className="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">
                 Trending
             </span>
         </div>
-
+        
         {aiLoading ? (
              <div className="flex py-8 items-center justify-center text-gray-400 animate-pulse">
                 Fetching AI insights...

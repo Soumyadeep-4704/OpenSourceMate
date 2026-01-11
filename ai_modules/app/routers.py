@@ -1,5 +1,7 @@
 import os
 import httpx
+import random
+from datetime import datetime, timedelta
 from fastapi import APIRouter, HTTPException, Body
 from pydantic import BaseModel
 from typing import List, Optional
@@ -24,7 +26,7 @@ GITHUB_TOKEN = os.getenv("GITHUB_TOKEN") # Uncomment if added a token to .env
 # --- Helper: GitHub API Client ---
 async def fetch_github(url: str, params: dict = None):
     headers = {"Accept": "application/vnd.github.v3+json"}
-    # if GITHUB_TOKEN: headers["Authorization"] = f"token {GITHUB_TOKEN}"
+    if GITHUB_TOKEN: headers["Authorization"] = f"token {GITHUB_TOKEN}"
     
     async with httpx.AsyncClient() as client:
         try:
@@ -41,17 +43,34 @@ async def get_trending_issues(language: str = "javascript"):
     """
     Returns trending issues based on comment count and recency.
     """
+    # Dynamic Date: Get issues created in the last 90 days to ensure content is fresh
+    three_months_ago = (datetime.now() - timedelta(days=90)).strftime('%Y-%m-%d')
+
     # Search for issues: open, not PRs, sorted by interactions, created recently
-    query = f"is:issue is:open language:{language} sort:interactions-desc created:>2024-01-01"
+    query = f"is:issue is:open language:{language} sort:interactions-desc created:>{three_months_ago}"
     
-    data = await fetch_github(f"{GITHUB_API_URL}/search/issues", {"q": query, "per_page": 10})
+    # RANDOMIZATION STRATEGY:
+    # Instead of always fetching page 1, we randomly fetch page 1, 2, or 3.
+    # We fetch 20 items per page. This gives us a rotating pool of the top trending issues.
+    random_page = random.randint(1, 3)
+
+    data = await fetch_github(f"{GITHUB_API_URL}/search/issues", {"q": query, "per_page": 20, "page": random_page})
     
     if not data:
         raise HTTPException(status_code=502, detail="Failed to fetch trending issues from GitHub")
-        
+    
+    raw_items = data.get("items", [])
+
+    # Double Randomization: Shuffle the items from the fetched page
+    if raw_items:
+        random.shuffle(raw_items)
+        selected_items = raw_items[:8] # Return top 8 from the shuffled batch
+    else:
+        selected_items = []
+
     # Process and return simplified data
     issues = []
-    for item in data.get("items", []):
+    for item in selected_items:
         issues.append({
             "id": item["id"],
             "title": item["title"],
