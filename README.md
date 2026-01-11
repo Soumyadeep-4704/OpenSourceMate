@@ -119,7 +119,7 @@ GITHUB_SECRET=your_github_client_secret
 npm run dev
 ```
 
-Open http://localhost:3000 with your browser to see the result.
+The frontend is now running at http://localhost:3000
 
 # 2. Backend Setup (Python)
 
