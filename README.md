@@ -14,11 +14,6 @@ Check out the project in action!
 
 <b> Note: </b> The demo video above was recorded using mock data to showcase the UI flow. The actual application code now pulls real-time data directly from the GitHub API based on the logged-in user's assignments. Additionally, Google authentication has been removed, and we have switched to GitHub authentication only.
 
-## 📚 Documentation
-
-We have detailed documentation available on Notion covering the architecture, component breakdown, and setup guide.
-
-📘 [Read the full Notion Documentation](https://mint-sunset-29e.notion.site/OpenSourceMate-2a539a01c1478089a599c1f8ec3bc1e5?source=copy_link)
 
 
 ## ✨ Features
