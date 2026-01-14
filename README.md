@@ -32,7 +32,7 @@ Check out the project in action!
 ## ✨ Key Features & Technical Highlights
 
 ### 🧠 Intelligent Recommendation Engine
-Powered by a Python backend (ai_modules), the application uses smart heuristics to curate content:
+#### Powered by a Python backend (ai_modules), the application uses smart heuristics to curate content:
 
 <b> Trending Issues: </b> dynamic algorithms fetch issues from the last 90 days that are generating high interaction (comments and reactions), ensuring you only see active projects.
 
@@ -41,7 +41,7 @@ Powered by a Python backend (ai_modules), the application uses smart heuristics 
 <b> Skill-Based Discovery: </b> parses your user profile to match specific programming languages (e.g., Python, JavaScript) with relevant "good first issues".
 
 ### 📊 Real-Time Analytics Dashboard
-Built with Next.js 14 and Recharts, the frontend provides an immersive experience:
+#### Built with Next.js 14 and Recharts, the frontend provides an immersive experience:
 
 <b> Activity Visualization: </b> interactive charts display your contribution frequency over the last 7 days.
 
